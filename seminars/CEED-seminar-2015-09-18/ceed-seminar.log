@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.31)  13 SEP 2015 20:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.31)  13 SEP 2015 22:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -720,11 +720,11 @@ Here is how much of TeX's memory you used:
  14602 multiletter control sequences out of 15000+600000
  6158 words of font info for 19 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 41i,5n,43p,753b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,5n,43p,1005b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2015/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/
 2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
-Output written on ceed-seminar.pdf (1 page, 29116 bytes).
+Output written on ceed-seminar.pdf (1 page, 29935 bytes).
 PDF statistics:
  26 PDF objects out of 1000 (max. 8388607)
  20 compressed objects within 1 object stream
