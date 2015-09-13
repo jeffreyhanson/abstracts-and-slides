@@ -1,0 +1,60 @@
+ 
+% load packages
+\documentclass[10pt, a4paper, fleqn]{article}
+\usepackage[labelfont=bf, labelsep=space]{caption}
+\usepackage{setspace}
+\usepackage{graphicx, lineno, color, float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{courier}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{longtable}
+\usepackage{amstext} %to enter text in mathematical formulae
+\usepackage{natbib}
+\usepackage{url, hyperref, makeidx, fancyhdr, booktabs, palatino}
+\usepackage{euscript} %EuScript, command: \EuScript, for letters in Euler script
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{paralist} %listing (i), (ii), etc.
+\usepackage{rotating} %rotating text
+\usepackage{multirow} %connecting columns in tables
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{epstopdf}
+\usepackage[plain]{fancyref}
+\usepackage{cleveref}
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=black, linktoc=page, urlcolor=black}
+\usepackage{titlesec}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage[titletoc,title]{appendix}
+\usepackage[hyphenbreaks]{breakurl}
+\usepackage{subcaption}
+
+% set prelim constants
+\bibliographystyle{mee}
+\renewcommand\bibsection{\section{\refname}}
+\titleformat{\subparagraph}{\itshape\normalsize}{\thesubparagraph}{1em}{}
+\titlespacing\subparagraph{0pt}{6pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\paragraph{0pt}{12pt plus 4pt minus 2pt}{+0pt plus 2pt minus 2pt}
+\newcommand{\pg}[1]{\paragraph{#1}\mbox{}\\}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\setlength\heavyrulewidth{1.5pt}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+\newcommand{\Tau}{\mathrm{T}}
+\crefname{appsec}{Appendix}{Appendices}
+
+\titleformat*{\section}{\Large \bfseries}
+\titleformat*{\subsection}{\large \bfseries}
+\titleformat*{\subsubsection}{\large \itshape}
+
+\setcounter{secnumdepth}{0}
+
+% main
+\begin{document}
+\section{Biodiversity processes in reserve-selection}
+\begin{normalsize}
+The overarching aim of conservation is to maximise the long-term persistence of biodiversity. To this end, protected areas are designated to buffer biodiversity patterns from anthropogenic impacts and sustain biodiversity processes. But resources are limited. Conservation actions must be cost effective. While many decision support tools have been developed to ensure that plans for protected areas adequately conserve biodiversity patterns, they have only limited ability to explicitly consider the evolutionary biodiversity processes acting on the species. Here, I will talk about my work on developing reserve selection methods that can accommodate information on biodiversity processes to identify more effective protected areas.
+\end{normalsize}
+\end{document}
+
