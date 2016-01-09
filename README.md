@@ -1,6 +1,6 @@
-Seminar and conference poster and talk abstracts
+Seminar and conference abstracts
 ================================================
 
-This repository contains the LaTEX source code and compiled formats of abstracts for seminars and conferences.
+This repository contains the LaTEX source code and compiled files for abstracts.
 
 

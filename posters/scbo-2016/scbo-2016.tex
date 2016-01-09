@@ -1,0 +1,106 @@
+\documentclass[11pt,]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={rapr: Representative and Adequate Prioritisations in R},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{rapr: Representative and Adequate Prioritisations in R}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Jeffrey O. Hanson$^1$, Jonathan R. Rhodes$^2$, Hugh P. Possingham$^1$,
+Richard A. Fuller$^1$\\$^1$School of Biological Sciences, The University
+of Queensland, Brisbane, QLD, Australia\\$^2$School of Geography,
+Planning and Environmental Management, The University of Queensland,
+Brisbane, QLD, Australia\\Correspondance should be addressed to
+\href{mailto:jeffrey.hanson@uqconnect.edu.au}{jeffrey.hanson@uqconnect.edu.au}}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{09 January 2016}
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+A central aim in conservation is to maximise the long-term persistence
+of biodiversity. To fulfil this aim, reserve networks are used to
+safeguard biodiversity patterns (eg. species, populations) and processes
+(eg. evolutionary processes that underpin genetic variation). Reserve
+selection is often formulated as an optimisation problem to identify
+cost-effective prioritisations. However, most existing decision support
+tools are based on formulations that are well suited for preserving
+biodiversity patterns, but not biodiversity processes. To fill this gap
+in the conservation planning toolbox, we developed the \texttt{rapr} R
+package. This R package provides functions to solve reserve selection
+problems using two novel formulations. Here, we explore the
+functionality of this R package using a conservation planning exercise
+in Queensland, Australia as a case-study. We demonstrate how explicitly
+considering biodiversity processes can alter a prioritisation. In most
+cases, we found that only a few additional plannning units are required
+to sufficiently preserve biodiversity processes.
+\end{abstract}
+
+
+
+\end{document}

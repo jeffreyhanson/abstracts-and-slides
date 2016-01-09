@@ -1,0 +1,22 @@
+---
+title: "rapr: Representative and Adequate Prioritisations in R"
+author: |
+  | Jeffrey O. Hanson$^1$, Jonathan R. Rhodes$^2$, Hugh P. Possingham$^1$, Richard A. Fuller$^1$
+  | $^1$School of Biological Sciences, The University of Queensland, Brisbane, QLD, Australia
+  | $^2$School of Geography, Planning and Environmental Management, The University of Queensland, Brisbane, QLD, Australia
+  | Correspondance should be addressed to jeffrey.hanson@uqconnect.edu.au
+date: "`r format(Sys.time(), '%d %B %Y')`"
+tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
+abstract: "A central aim in conservation is to maximise the long-term persistence of biodiversity. To fulfil this aim, reserve networks are used to safeguard biodiversity patterns (eg. species, populations) and processes (eg. evolutionary processes that underpin genetic variation). Reserve selection is often formulated as an optimisation problem to identify cost-effective prioritisations. However, most existing decision support tools are based on formulations that are well suited for preserving biodiversity patterns, but not biodiversity processes. To fill this gap in the conservation planning toolbox, we developed the `rapr` R package. This R package provides functions to solve reserve selection problems using two novel formulations. Here, we explore the functionality of this R package using a conservation planning exercise in Queensland, Australia as a case-study. We demonstrate how explicitly considering biodiversity processes can alter a prioritisation. In most cases, we found that only a few additional plannning units are required to sufficiently preserve biodiversity processes."
+output:
+  rmarkdown::pdf_document:
+    toc: false
+    keep_tex: yes
+    fig_caption: yes
+fontsize: 11pt
+documentclass: article
+vignette: >
+  %\VignetteIndexEntry{rapr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
