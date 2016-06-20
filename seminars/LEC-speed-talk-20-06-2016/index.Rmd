@@ -1,0 +1,209 @@
+---
+title       : "Are environmental and geographic variables effective surrogates for genetic variation in conservation planning?"
+subtitle    : 
+author      : Jeffrey O. Hanson
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Conserving genetic variation
+
+```{r, include=FALSE}
+### Initialization
+## load packages
+library(rworldxtra)
+library(rgdal)
+library(rgeos)
+library(maptools)
+library(RColorBrewer)
+library(plyr)
+library(dplyr)
+library(ggplot2) # devtools::install_github('paleo13/ggplot2')
+library(gridExtra)
+
+## Load functions
+for (x in dir(file.path('assets', 'functions'), full.names=TRUE)) source(x)
+
+## load data
+grid.sub.FPLY <- readRDS('assets/data/grid.sub.FPLY.rds')
+scenario.PDF <- readRDS('assets/data/scenario.PDF.rds')
+scenario.SDF <- readRDS('assets/data/scenario.SDF.rds')
+grid.DF <- readRDS('assets/data/grid.DF.rds')
+grid.FPLY <- readRDS('assets/data/grid.FPLY.rds')
+grid.PLY <- readRDS('assets/data/grid.PLY.rds')
+grid.PLY <- readRDS('assets/data/grid.PLY.rds')
+spp.samples.DF <- readRDS('assets/data/spp.samples.DF.rds')
+
+## create variables
+# download basemap
+data(countriesHigh)
+countries.FPLY <- countriesHigh[
+	countriesHigh$ADMIN %in% c(
+		'Italy', 'Switzerland', 'France', 'Austria',
+		'Germany', 'Slovenia', 'Croatia', 'Hungary',
+		'Monaco', 'Germany', 'Slovakia', 'Czech Republic'
+	)
+,] %>% spFortify
+
+# define ggplot2 color wheel function
+gg_color_hue <- function(n) {
+	hues <- seq(15, 375, length=n+1)
+	hcl(h=hues, l=65, c=100)[1:n]
+}
+```
+
+### Adaptive variation
+* genetic variation that affects fitness
+* caused by abiotic and biotic factors
+* helps foster resilience to short-term environmental change
+
+### Neutral variation
+* genetic variation that *does not* affects fitness
+* arises due to break-down in gene flow
+* helps avoid inbreeding depression
+
+# Typically prioritizations assume zero genetic variation within species: *can we use cheap variables as surrogates to make better decisions*?
+
+--- .class #slide1
+
+## Study area
+
+```{r, message=FALSE, echo=FALSE, result="none", fig.align='center'}
+for (x in dir(file.path('assets', 'functions'), full.names=TRUE)) source(x)
+# calculate species richness
+grid.PLY$Species_richness <- grid.PLY@data %>%
+	select(5:(4+n_distinct(spp.samples.DF$species))) %>% as.matrix() %>% rowSums()
+
+# plot species richness
+ggplot() +
+	geom_polygon(data=countries.FPLY, aes(x=long, y=lat, group=group),
+		fill='grey85', color='grey70') +
+	geom_polygon(data=spFortify(grid.PLY), aes(x=long, y=lat, 
+		group=group, fill=Species_richness), color='grey10') +
+	scale_fill_gradientn(name='Richness',
+		colors=brewer.pal(9,'PuBu'),
+		guide=guide_colorbar(ticks=element_line(color='black'), border=element_line(color='black'))
+	) +
+	theme_classic() +
+	theme(
+		axis.ticks=element_blank(), axis.text=element_blank(), axis.line=element_blank(), plot.margin = unit(c(0, 0, 0, 0), "lines"), axis.title=element_blank(),
+		panel.border=element_rect(color='black', fill=NA, size=1), legend.title=element_text(size=25)
+	) +
+	coord_cartesian(
+		xlim=buffered.range(grid.FPLY$long, 0),
+		ylim=buffered.range(grid.FPLY$lat, 0)
+	)
+```
+
+--- .class #slide2
+
+## Climatic variation
+
+```{r, message=FALSE, echo=FALSE, result="none", fig.align='center', fig.width=14, fig.height=7}
+for (x in dir(file.path('assets', 'functions'), full.names=TRUE)) source(x)
+do.call(
+	grid.arrange,
+		append(
+		llply(grep('^env\\_.*$', names(grid.DF), value=TRUE), function(x) {
+			grid.FPLY$plot_title <- paste0('PC ', substr(x, nchar(x), nchar(x)))
+			ggplot() +
+				geom_polygon(data=countries.FPLY, aes(x=long, y=lat, group=group),
+					fill='grey85', color='grey70') +
+				geom_polygon(data=grid.FPLY, aes_string(x='long', y='lat', 
+					group='group', fill=x), color='grey10') +
+				theme_classic() +
+				theme(
+					axis.ticks=element_blank(), axis.text=element_blank(), axis.line=element_blank(), plot.margin = unit(c(0, 0, 0, 0), "lines"),
+					axis.title=element_blank(),
+					panel.border=element_rect(color='black', fill=NA, size=1),
+					strip.background = element_rect(fill='grey20'),
+					strip.text = element_text(color='white', size=30)
+				) +
+				coord_cartesian(
+					xlim=buffered.range(grid.FPLY$long, 0),
+					ylim=buffered.range(grid.FPLY$lat, 0)
+				) +
+				scale_fill_gradientn(name='',
+					colors=brewer.pal(9, 'RdYlBu'),
+					guide=guide_colorbar(ticks=element_line(color='black'), border=element_line(color='black'))
+				) +
+				facet_wrap(~ plot_title)
+		}),
+		list(ncol=3)
+	)
+)
+```
+
+--- .class #slide3
+
+## Preliminary results: prioritisations
+
+```{r, message=FALSE, echo=FALSE, result="none", fig.align='center', fig.width=14, fig.height=7}
+## make maps
+for (x in dir(file.path('assets', 'functions'), full.names=TRUE)) source(x)
+# filter data
+grid.sub.FPLY <- filter(grid.sub.FPLY, Context=='Multi-species\n(equal costs)')
+# make plot
+ggplot() +
+	geom_polygon(data=countries.FPLY, aes(x=long, y=lat, group=group),
+		fill='grey85', color='grey70') +
+	geom_polygon(data=grid.sub.FPLY, aes_string(x='long', y='lat', 
+		group='group', fill='Selection.Frequency'),
+		alpha=0.8, color='grey10') +
+	theme_classic() +
+	theme(axis.ticks=element_blank(), axis.text=element_blank(),
+		plot.margin=unit(c(0,0,0,0),'cm'), axis.line=element_blank(),
+		strip.background = element_rect(fill='grey20'),
+		strip.text = element_text(color='white', size=30),
+		legend.position='bottom', legend.key.width=unit(1.8, 'cm'),
+		legend.title=element_text(vjust=-5, size=25),
+		legend.margin=unit(c(0.1), 'cm'),
+		axis.title=element_blank()) +
+	coord_cartesian(
+		xlim=buffered.range(grid.sub.FPLY$long, 0),
+		ylim=buffered.range(grid.sub.FPLY$lat, 0)
+	) +
+	facet_wrap( ~ Prioritization) +
+	scale_fill_gradientn(name='Selection Frequency (%)',
+		colors=brewer.pal(9, 'PuBu'),
+		guide=guide_colorbar(title.position='bottom', title.hjust=0.5,
+			ticks=element_line(color='black'), border=element_line(color='black'))
+	)
+```
+
+--- .class #slide4
+
+## Preliminary results: performance
+
+```{r, message=FALSE, echo=FALSE, warn=FALSE, result="none", fig.align='center', fig.width=14, fig.height=7}
+## make barplot
+for (x in dir(file.path('assets', 'functions'), full.names=TRUE)) source(x)
+# filter data
+scenario.SDF <- filter(scenario.SDF, Context=='Multi-species\n(equal costs)', !is.na(genetic.held))
+# make plot
+suppressWarnings({
+	ggplot(aes(x=Prioritisation,y=genetic.held),
+		data=scenario.SDF) +
+		geom_boxplot(position=position_dodge(0.9)) +
+		scale_fill_manual(name='Prioritisation',
+			values=c('grey80','grey50','grey20')) +
+		ylab('Genetic variation secured (%)') +
+		xlab('') +
+		scale_y_continuous(breaks=c(0,0.25,0.5,0.75,1), limits=c(NA, 1.2)) +
+		theme_classic() +
+		theme(strip.background = element_rect(fill='grey20'),
+			strip.text = element_text(color='white', size=30),
+			panel.border = element_rect(color='black', fill=NA),
+			axis.text.x=element_text(angle=45, hjust=1, vjust=1, size=25),
+			axis.title=element_text(size=20), axis.text.y=element_text(size=20)) +
+		facet_wrap( ~ Metric)
+})
+```
+
+--- .class #slide5
+

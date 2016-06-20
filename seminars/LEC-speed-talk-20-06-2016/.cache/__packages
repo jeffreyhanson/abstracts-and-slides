@@ -1,0 +1,12 @@
+base
+slidify
+plyr
+dplyr
+ggplot2
+gridExtra
+sp
+rworldxtra
+rgdal
+rgeos
+maptools
+RColorBrewer
