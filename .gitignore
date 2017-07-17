@@ -1,0 +1,8 @@
+# ignore data
+wc10
+COL_msk_alt.*
+slides_cache
+slides_files
+
+# temp files
+.directory
