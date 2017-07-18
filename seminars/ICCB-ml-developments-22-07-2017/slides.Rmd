@@ -1,0 +1,142 @@
+---
+title: "Latest developments in machine learning"
+subtitle: "</br>[github.com/jeffreyhanson/abstracts-and-slides](https://github.com/jeffreyhanson/abstracts-and-slides)"
+author: "Jeffrey Hanson"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  xaringan::moon_reader:
+    css: "styles.css"
+    chakra: libs/remark-latest.min.js
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: ""
+---
+
+```{r, include=FALSE}
+options(scipen = 10)
+```
+
+# XGBoost
+* Extreme gradient boosted trees
+* [python](https://www.python.org/) / [R](https://www.r-project.org/) / [Julia](https://julialang.org/)
+* Fast and big data sets (eg. GPU support)
+* Supports range of response variable types
+* 8 [Kaggle]() competitions won using xgboost
+
+---
+
+# Example XGBoost usage
+
+```{r}
+# load data set
+data(agaricus.train, package = "xgboost")
+# number of species
+length(agaricus.train$label)
+# number of traits
+ncol(agaricus.train$data)
+# proportion that are poisonous
+mean(agaricus.train$label)
+```
+
+---
+# Example XGBoost usage
+```{r}
+# create parameters
+p <- list(max_depth = 2, eta = 1, silent = 1, nrounds = 2,
+          nthread = 2,  objective = "binary:logistic",
+          eval_metric = "auc")
+# fit trees
+bst <- xgboost::xgboost(data = agaricus.train$data,
+                        label = agaricus.train$label,
+                        nrounds = 10, param = p)
+```
+
+---
+# Example XGBoost usage
+
+```{r}
+# variable importance
+xgboost::xgb.importance(names(agaricus.train$data), model = bst)
+```
+
+---
+# Example XGBoost usage
+```{r, fig.width=6}
+# plot tree
+xgboost::xgb.plot.tree(feature_names = names(agaricus.train$data),
+                       model = bst, trees = 1)
+```
+
+---
+# XGBoost Resources
+* [user group](https://groups.google.com/forum/#!forum/xgboost-user/)
+* [project repository](https://github.com/dmlc/xgboost)
+* [documentation](http://xgboost.readthedocs.io/en/latest/)
+
+---
+# TensorFlow
+
+* Roll your own model
+* [python](https://www.python.org/) / [R](https://www.r-project.org/)
+* Fast and big data sets (eg. GPU support)
+* Make sure you grab the development version from GitHub
+
+---
+# Example TensorFlow usage
+
+```{r}
+# load package
+library(tensorflow)
+
+# create 100 phony x, y data points, y = x * 0.1 + 0.3
+x_data <- runif(100, min=0, max=1)
+y_data <- x_data * 0.1 + 0.3
+
+# try to find values for W and b that compute y_data = W * x_data + b
+# (we know that W should be 0.1 and b 0.3, but TensorFlow find it)
+W <- tf$Variable(tf$random_uniform(shape(1L), -1.0, 1.0))
+b <- tf$Variable(tf$zeros(shape(1L)))
+y <- W * x_data + b
+
+# minimize the mean squared errors.
+loss <- tf$reduce_mean((y - y_data) ^ 2)
+optimizer <- tf$train$GradientDescentOptimizer(0.5)
+train <- optimizer$minimize(loss)
+```
+
+---
+# Example TensorFlow usage
+
+```{r, message="hide"}
+# launch the graph and initialize the variables.
+sess = tf$Session()
+sess$run(tf$global_variables_initializer())
+```
+```{r}
+# train the model
+for (step in 1:201) {
+  sess$run(train)
+}
+```
+
+---
+# Example TensorFlow usage
+
+```{r}
+# print correct answer
+print(c("b" = 0.1, "W" = 0.3))
+
+# print TensorFlow's estimate
+print(c("b" = sess$run(b), "W" = sess$run(W)))
+```
+
+---
+# TensorFlow Resources
+* [project repository](https://github.com/tensorflow/tensorflow)
+* [documentation](https://www.tensorflow.org/)
+* [RStudio documentation](https://tensorflow.rstudio.com/)
+* [examples on GitHub](https://github.com/aymericdamien/TensorFlow-Examples)
