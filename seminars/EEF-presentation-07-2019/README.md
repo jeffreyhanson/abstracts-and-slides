@@ -1,7 +1,9 @@
 # Conserving evolutionary processes for three amphibian species in the Iberian Peninsula
 
-Jeffrey O. Hanson^*1^, TODO, Silvia B. Carvalho^1^
-^1^CIBIO/InBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos da Universidade do Porto, Vairão, Portugal
-^*^Correspondence should be addressed to jeffrey.hanson@uqconnect.edu.au
+Jeffrey O. Hanson^\*1^, TODO, Silvia B. Carvalho^1^   
+^1^CIBIO/InBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos da Universidade do Porto, Vairão, Portugal  
+^\*^Correspondence should be addressed to jeffrey.hanson@uqconnect.edu.au  
 
 To maximize long-term persistence of biodiversity, nature reserves and other protected areas need to maintain the evolutionary processes that underpin species' long-term persistence. However, assessments of existing protected areas and prioritizations for establishing new protected areas rarely account for such evolutionary processes explicitly. Here we show that protected areas in Portugal and Spain are failing to adequately represent spatial variables of evolutionary processes that underpin the survival of three amphibian species (_Hyla molleri_, _Rana iberica_, and _Pelobates cultripes_). Using genetic, environmental, and occurrence data, we mapped spatial variables for each genetic lineage within each species and used them to assess if existing protected areas are representing (i) individuals with putatively genetic high fitness (i.e. individual heterozygosity), (ii) neutral genetic variation, (iii) adaptive genetic variation, (iv) variation in selection pressures using contemporary environmental data, and (v) potential refugia for climate change. Although protected areas are currently sampling a broad range of environmental conditions, meaning that populations in distinct environmental settings which might evolve local adaptations are unlikely to be impacted by habitat destruction, they are mostly failing to represent the spatial variables that relate to genetic fitness and variation. To inform conservation decision making, we identified priority areas to address shortfalls in the representation of each spatial variable for each genetic lineage. By applying this framework to other taxa, conservation assessments and prioritizations can explicitly account for evolutionary processes and, ultimately, enhance the long-term persistence of biodiversity.
+
+Key words: Systematic conservation planning, gap analysis, spatial prioritization, protected areas, optimization.
