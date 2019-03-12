@@ -1,9 +1,9 @@
 # Conserving evolutionary processes for three amphibian species in the Iberian Peninsula
 
-Jeffrey O. Hanson^\*1^, Miguel Camacho-Sanchez^1^, Adam Marques^1^, Íñigo Martínez-Solano^1,2^, Guillermo Velo-Antón^1^, Ana Veríssimo^1^, Silvia B. Carvalho^1^
-^1^CIBIO/InBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos da Universidade do Porto, Vairão, Portugal
-^2^Museo Nacional de Ciencias Naturales-CSIC, Madrid, Spain
-^\*^Correspondence should be addressed to jeffrey.hanson@uqconnect.edu.au
+Jeffrey O. Hanson^\*1^, Miguel Camacho-Sanchez^1^, Adam Marques^1^, Íñigo Martínez-Solano^1,2^, Guillermo Velo-Antón^1^, Ana Veríssimo^1^, Silvia B. Carvalho^1^    
+^1^CIBIO/InBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos da Universidade do Porto, Vairão, Portugal    
+^2^Museo Nacional de Ciencias Naturales-CSIC, Madrid, Spain    
+^\*^Correspondence should be addressed to jeffrey.hanson@uqconnect.edu.au    
 
 **Objectives**
 
@@ -11,7 +11,7 @@ To maximize the long-term persistence of biodiversity, protected areas need to m
 
 **Methods**
 
-We used environmental, genetic, and occurrence data to map patterns of (i) genetic fitness (individual heterozygosity), (ii) neutral genetic variation, (iii) adaptive genetic variation, (iv) contemporary selection pressures using climate data, and (v) intensity of future selection pressures using future climate projections. We then assessed if existing protected areas are adequately representing these evolutionary components for genetic lineages within each species, and identified priority areas for protected area establishment.
+We used environmental, genetic, and occurrence data to map patterns of (i) individual-level genetic diversity (using homozygosity by locus scores), (ii) broad-scale neutral genetic variation, (iii) broad-scale adaptive genetic variation, (iv) variation in contemporary selection pressures using climate data, and (v) intensity of future selection pressures using future climate projections. We then assessed if existing protected areas are adequately representing these evolutionary components for each species, and identified priority areas for protected area establishment.
 
 **Results**
 
