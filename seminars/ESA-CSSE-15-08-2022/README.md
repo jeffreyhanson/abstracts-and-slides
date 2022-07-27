@@ -19,3 +19,9 @@ Protected area systems need to safeguard biodiversity with limited funding and i
 ### Results/Conclusions
 
 Our framework successfully identifies survey plans that are likely to substantially improve the performance of plans for protected areas. We also show that conventional approaches for designing survey plans -- based on statistical, biogeographical, or economic criteria -- can impede conservation planning by squandering limited funding on surveying places that might not improve decision making. For example, sampling places where species are most likely to occur had the worst performance. This is because simply verifying the presence of species in places where they are already thought to occur is unlikely to update existing information and, in turn, improve management decisions. Moreover, survey plans based on conventional approaches had the worst performance under limited budgets that are typical of real-world scenarios. Our findings highlight the importance of carefully considering how new data has the potential to alter conservation outcomes when designing data collection plans.
+
+## Additional information
+
+Contributed Talk - Conservation Planning, Policy, And Theory 2
+Session Date: Monday August 15, 2022
+Session Time: 3:30 PM - 5:00 PM Eastern Time
