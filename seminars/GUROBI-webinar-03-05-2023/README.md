@@ -1,0 +1,7 @@
+# Optimizing to make better conservation decisions
+
+## Jeffrey Hanson and Richard Schuster
+
+Global biodiversity is in crisis. Faced with incomplete information, limited resources, and a myriad of demands from stakeholders, conservation practitioners need to identify priority areas for conservation. To help resolve this, systematic conservation planning provides a framework that combines biodiversity, economic, and land use data with optimization algorithms to generate conservation plans. Although systematic conservation planning has traditionally relied on ranking, heuristic, and meta-heuristic algorithms, exact algorithm solvers (such as Gurobi) are becoming increasingly common.
+
+In this webinar, Dr. Jeffrey Hanson, Postdoctoral Scientist, Carleton University, will start with an introduction to systematic conservation planning, explain some of the key concepts and mathematical problems formulations for generating conservation plans, and highlight case studies from the literature. Dr. Richard Schuster, Director of Social Planning and Innovation, Nature Conservancy of Canada, will then compare exact algorithm solvers with conventional software for conservation planning, and talk about some real-world examples where exact algorithms solvers — such as Gurobi — have been used to help guide conservation decisions. By using exact algorithm solvers, conservation practitioners can quickly identify cost-effective conservation plans to inform decision making.
