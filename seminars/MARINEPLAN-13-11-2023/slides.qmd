@@ -1,0 +1,250 @@
+---
+title: "MarinePlan Meeting"
+date: 2023-11-13
+author: "Jeffrey Hanson"
+format:
+  revealjs:
+    theme: [dark]
+---
+
+```{css echo = FALSE}
+.small-code{
+  font-size: 70%
+}
+```
+
+```{r init, include = FALSE}
+library(prioritizr)
+library(prioritizrdata)
+library(terra)
+library(sf)
+```
+
+```{r data}
+#| include: FALSE
+
+# simulate data
+sim_pu_polygons <- get_sim_pu_polygons()
+sim_pu_raster <- get_sim_pu_raster()
+sim_features <- get_sim_features()
+sim_targets <- runif(nlyr(sim_features))
+
+# create version of features with zeros in most planning units
+sim_zfeatures <- as.int((sim_features * sim_pu_raster) > 195)
+
+# case study data
+wa_pu <- get_wa_pu()
+wa_features <- get_wa_features()
+wa_locked_in <- get_wa_locked_in()
+wa_locked_out <- get_wa_locked_out()
+```
+
+## Why use prioritizr?
+
+- It's an `R` package (yes, this is a GOOD thing!)
+- It provides performance guarantees
+- It's flexible
+- It's relatively fast
+
+## How fast is it?
+
+![](assets/benchmark.png){width=80%, fig-align="center"}
+
+## Who uses it?
+
+![](assets/usage.png){width=80%, fig-align="center"}
+
+## Recent updates (version 8+)
+
+- Reduce memory consumption
+  - replace `proto` with `R6` classes
+- Faster processing of raster data
+  - via `terra` R package
+- Faster boundary length calculations for vector data
+- Better `print()`, warnings, and error messages
+  - provides standard format for errors
+  - provides UTF-8 symbols for context
+  - clicking on functions in messages opens help
+
+## Better `print()` function
+
+<div class=small-code>
+```{r "example-print-1"}
+#| echo: TRUE
+
+# create problem
+p <-
+  problem(wa_pu, wa_features) %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.2) %>%
+  add_locked_in_constraints(wa_locked_in) %>%
+  add_locked_out_constraints(wa_locked_out) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver(gap = 0.2)
+
+# print problem
+print(p)
+```
+</div>
+
+![](assets/print.png){width=100%, fig-align="left"}
+
+## Better error messages
+
+- E.g., forgetting to specify costs for vector data
+
+```{r "example-cost-error"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# create problem
+p <-
+  problem(sim_pu_polygons, sim_features) %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.3) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver()
+```
+
+## Better error messages
+
+- E.g., typo in specifying costs
+
+```{r "example-typo-error"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# create problem
+p <-
+  problem(sim_pu_polygons, sim_features, cost_column = "cosst") %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.3) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver()
+```
+
+## Better error messages
+
+- E.g., setting invalid targets
+
+```{r "example-targets-error"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# create problem
+p <-
+  problem(sim_pu_polygons, sim_features, cost_column = "cost") %>%
+  add_min_set_objective() %>%
+  add_relative_targets(targets = c(0.1, 0.5, 0.8, 0.6)) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver()
+```
+
+## Better error messages
+
+- E.g., non-conformable data
+
+```{r "example-crs-error"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# manually override coordinate reference system
+sim_pu_polygons2 <- st_set_crs(sim_pu_polygons, st_crs(3857))
+
+# create problem
+p <-
+  problem(x = sim_pu_polygons2, features = sim_features, "cost") %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.2) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver()
+```
+
+## Better error messages
+
+- E.g., when your code calls code that has an error
+
+```{r "example-nested-error"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# define function
+calc_targets <- function(x) {
+  ## here we make a typo, because it should be `terra::global()`
+  terra::gobal(x, "sum", na.rm = TRUE)[[1]] / 10
+}
+
+# create problem
+p <-
+  problem(sim_pu_polygons, sim_features, cost_column = "cost") %>%
+  add_min_set_objective() %>%
+  add_relative_targets(targets = calc_targets(sim_features)) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver()
+```
+
+## Better warnings
+
+- E.g., negative cost values
+
+```{r "example-negative-costs-warnings"}
+#| echo: TRUE
+#| error: TRUE
+#| warning: TRUE
+
+# create column with negative cost values
+sim_pu_polygons$ncosts <- -1
+
+# create problem
+p <-
+  problem(
+    x = sim_pu_polygons,
+    features = sim_features,
+    cost_column = "ncosts"
+  ) %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.2) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver()
+```
+
+## Better presolve checks
+
+- E.g., very sparse data
+
+```{r "example-sparse-data-presolve"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# create and try to solve problem
+s <- problem(sim_pu_polygons, sim_zfeatures, cost_column = "cost") %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.2) %>%
+  add_binary_decisions() %>%
+  add_cbc_solver() %>%
+  solve()
+```
+
+## Better presolve checks
+
+- E.g., very high `penalty` values can degrade solvers
+
+```{r "example-high-values-presolve"}
+#| echo: TRUE
+#| output: TRUE
+#| error: TRUE
+
+# create and try to solve problem
+s <- problem(sim_pu_polygons, sim_features, cost_column = "cost") %>%
+  add_min_set_objective() %>%
+  add_relative_targets(0.2) %>%
+  add_boundary_penalties(penalty = 1e20) %>%
+  add_binary_decisions() %>%
+  solve()
+```
